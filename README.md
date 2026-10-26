@@ -26,13 +26,13 @@ The license members are `ISO_5962.Expression`, the SPDX license expression gramm
 
 Snippets, the deprecated reviewer information, file `artifactOfs` and `fileDependencies`, and the cross-references of extracted licenses are accepted and dropped when read. A verification code is not required when files were analyzed, and a file is not required to carry a SHA1 checksum, although the specification text asks for both.
 
-License identifiers are checked against the idstring grammar, not against the SPDX license list, which is a separately released data set; identifiers compare exactly, although Annex D matches them case-insensitively. Package URLs in external references are kept as text.
+License identifiers are checked against the idstring grammar, not against the SPDX license list, which is a separately released data set; identifiers compare exactly, although Annex D matches them case-insensitively. A package-manager reference of type `purl` carries an `ECMA_427.PURL`, parsed with swift-ecma-427.
 
 ## Later editions
 
 SPDX 2.3 and 3.0 are not ISO editions yet; SPDX 3.0 is at the DIS stage as the next edition of ISO/IEC 5962. SPDX 2.3 keeps this JSON shape but makes the license and copyright members of packages and files optional, adds a package's primary purpose and its release, build and valid-until dates, adds checksum algorithms (SHA3, BLAKE2b, BLAKE3, ADLER32) and relationship types (`AMENDS`, `REQUIREMENT_DESCRIPTION_FOR`, `SPECIFICATION_FOR`), and spells the external reference categories `PACKAGE-MANAGER` and `PERSISTENT-ID` where the 2.2 JSON schema has `PACKAGE_MANAGER` and no persistent identifiers. This package refuses a `SPDX-2.3` document. SPDX 3.0 replaces the document with a JSON-LD graph of elements organised in profiles and shares no JSON shape with 2.2.
 
-The tests transliterate the SPDX 2.2 JSON example from the SPDX specification repository (CC-BY-3.0).
+A nested test package (`Tests/Package.swift`) reads the SPDX 2.2 JSON example from the SPDX specification repository (CC-BY-3.0) verbatim with swift-json, and round-trips it through the model and through JSON text. The package itself depends only on swift-rfc-8259 for JSON.
 
 ## License
 

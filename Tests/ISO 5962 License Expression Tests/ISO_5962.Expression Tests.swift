@@ -60,7 +60,7 @@ extension ISO_5962.Expression.Test.`Edge Case` {
 
     @Test
     func `operators are case-sensitive`() {
-        #expect(throws: ISO_5962.Expression.Error.unexpected("b")) { try ISO_5962.Expression("a and b") }
+        #expect(throws: ISO_5962.Expression.Error.unexpected("and")) { try ISO_5962.Expression("a and b") }
     }
 
     @Test
