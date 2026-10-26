@@ -1,6 +1,6 @@
 import Binary
 import Byte
-public import ISO_5962_License_Expression
+import ISO_5962_License_Expression
 import RFC_3986
 import RFC_8259
 

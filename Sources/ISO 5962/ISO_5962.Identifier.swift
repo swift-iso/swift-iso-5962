@@ -6,7 +6,7 @@ extension ISO_5962 {
         public let element: String
 
         public init(_ element: String, document: String? = nil) throws(ISO_5962.Error) {
-            guard ISO_5962.isIdstring(element), document.map { ISO_5962.isIdstring($0) } ?? true else {
+            guard ISO_5962.isIdstring(element), document.map({ ISO_5962.isIdstring($0) }) ?? true else {
                 throw .invalid("SPDXID")
             }
             self.document = document
