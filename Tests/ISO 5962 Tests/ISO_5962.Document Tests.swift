@@ -1,5 +1,6 @@
 import Byte
 import ISO_5962
+import ISO_5962_License_Expression
 import ISO_8601
 import RFC_3986
 import RFC_8259
@@ -75,7 +76,7 @@ extension ISO_5962.Document.Test.Unit {
         let expected: [ISO_5962.Checksum.Algorithm] = [.md5, .sha1, .sha256]
         #expect(glibc.identifier.element == "Package")
         #expect(glibc.supplier == .value(.person("Jane Doe (jane.doe@example.com)")))
-        #expect(glibc.licenseConcluded == .value("(LGPL-2.0-only OR LicenseRef-3)"))
+        #expect(glibc.licenseConcluded == .value(.disjunction(.simple(.license("LGPL-2.0-only")), .simple(.reference("3", document: nil)))))
         #expect(glibc.checksums.map(\.algorithm) == expected)
         #expect(glibc.externalRefs.first?.category == .security)
         guard case .analyzed(let verification) = glibc.analysis else {
@@ -108,7 +109,7 @@ extension ISO_5962.Document.Test.Unit {
         let file = try #require(document.files.first { $0.identifier.element == "File" })
         let types: [ISO_5962.File.Kind] = [.source]
         #expect(file.types == types)
-        #expect(file.licenseInfoInFiles == [.value("GPL-2.0-only"), .value("LicenseRef-2")])
+        #expect(file.licenseInfoInFiles == [.value(.license("GPL-2.0-only")), .value(.reference("2", document: nil))])
         #expect(document.hasExtractedLicensingInfos.map(\.identifier) == ["1", "2", "4", "Beerware-4.2", "3"])
         #expect(document.annotations.map(\.kind) == [.other, .review, .review])
     }
@@ -132,7 +133,7 @@ extension ISO_5962.Document.Test.Unit {
                 try ISO_5962.Checksum(algorithm: .sha256, value: [Byte](repeating: Byte(bitPattern: 0x0F), count: 32))
             ],
             licenseConcluded: .unasserted,
-            licenseDeclared: .value("Apache-2.0"),
+            licenseDeclared: .value(.simple(.license("Apache-2.0"))),
             copyrightText: .absent
         )
         #expect(package.json["licenseConcluded"] == "NOASSERTION")
@@ -290,6 +291,16 @@ extension ISO_5962.Document.Test.`Edge Case` {
     func `an extracted license needs the LicenseRef prefix`() {
         #expect(throws: ISO_5962.Error.invalid("licenseId")) {
             try ISO_5962.License(json: ["licenseId": "MIT", "extractedText": "text"])
+        }
+    }
+
+    @Test
+    func `a license expression that does not parse is refused`() {
+        #expect(throws: ISO_5962.Error.invalid("licenseConcluded")) {
+            try ISO_5962.Package(json: ISO_5962.Document.Test.package([("licenseConcluded", "MIT AND")]))
+        }
+        #expect(throws: ISO_5962.Error.invalid("licenseInfoFromFiles")) {
+            try ISO_5962.Package(json: ISO_5962.Document.Test.package([("licenseInfoFromFiles", ["MIT OR Apache-2.0"])]))
         }
     }
 

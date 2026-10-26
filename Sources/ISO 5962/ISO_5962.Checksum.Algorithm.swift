@@ -1,3 +1,5 @@
+public import ISO_5962_License_Expression
+
 extension ISO_5962.Checksum {
     public enum Algorithm: String, Sendable, Hashable, CaseIterable {
         case sha1 = "SHA1"

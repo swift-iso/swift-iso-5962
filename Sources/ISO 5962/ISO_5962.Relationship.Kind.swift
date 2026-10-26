@@ -1,3 +1,5 @@
+public import ISO_5962_License_Expression
+
 extension ISO_5962.Relationship {
     public enum Kind: String, Sendable, Hashable, CaseIterable {
         case variantOf = "VARIANT_OF"

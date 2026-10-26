@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 public import RFC_8259
 
 extension ISO_5962.Package.Verification {

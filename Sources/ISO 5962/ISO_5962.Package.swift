@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 public import RFC_3986
 
 extension ISO_5962 {
@@ -13,9 +14,9 @@ extension ISO_5962 {
         public let checksums: [ISO_5962.Checksum]
         public let homepage: ISO_5962.Assertion<RFC_3986.URI>?
         public let sourceInfo: String?
-        public let licenseConcluded: ISO_5962.Assertion<String>
-        public let licenseInfoFromFiles: [ISO_5962.Assertion<String>]
-        public let licenseDeclared: ISO_5962.Assertion<String>
+        public let licenseConcluded: ISO_5962.Assertion<ISO_5962.Expression>
+        public let licenseInfoFromFiles: [ISO_5962.Assertion<ISO_5962.Expression.Simple>]
+        public let licenseDeclared: ISO_5962.Assertion<ISO_5962.Expression>
         public let licenseComments: String?
         public let copyrightText: ISO_5962.Assertion<String>
         public let summary: String?
@@ -38,9 +39,9 @@ extension ISO_5962 {
             checksums: [ISO_5962.Checksum] = [],
             homepage: ISO_5962.Assertion<RFC_3986.URI>? = nil,
             sourceInfo: String? = nil,
-            licenseConcluded: ISO_5962.Assertion<String>,
-            licenseInfoFromFiles: [ISO_5962.Assertion<String>] = [],
-            licenseDeclared: ISO_5962.Assertion<String>,
+            licenseConcluded: ISO_5962.Assertion<ISO_5962.Expression>,
+            licenseInfoFromFiles: [ISO_5962.Assertion<ISO_5962.Expression.Simple>] = [],
+            licenseDeclared: ISO_5962.Assertion<ISO_5962.Expression>,
             licenseComments: String? = nil,
             copyrightText: ISO_5962.Assertion<String>,
             summary: String? = nil,

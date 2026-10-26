@@ -1,5 +1,6 @@
 // Transliterated from the SPDX 2.2.1 JSON example (spdx/spdx-spec v2.2.1, examples/SPDXJSONExample-v2.2.spdx.json), CC-BY-3.0.
 import ISO_5962
+import ISO_5962_License_Expression
 import RFC_8259
 
 extension ISO_5962.Document.Test {

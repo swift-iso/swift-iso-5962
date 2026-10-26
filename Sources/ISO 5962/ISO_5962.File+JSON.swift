@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 public import RFC_8259
 
 extension ISO_5962.File {
@@ -14,7 +15,7 @@ extension ISO_5962.File {
         guard let licenseConcluded = try members.assertion("licenseConcluded", ISO_5962.Package.expression) else {
             throw .missing("licenseConcluded")
         }
-        guard let copyrightText = try members.assertion("copyrightText", ISO_5962.Package.expression) else {
+        guard let copyrightText = try members.assertion("copyrightText", ISO_5962.Package.text) else {
             throw .missing("copyrightText")
         }
         try self.init(
@@ -23,7 +24,7 @@ extension ISO_5962.File {
             types: try members.values("fileTypes", Kind.init(json:)),
             checksums: try members.values("checksums", ISO_5962.Checksum.init(json:)),
             licenseConcluded: licenseConcluded,
-            licenseInfoInFiles: try members.assertions("licenseInfoInFiles", ISO_5962.Package.expression),
+            licenseInfoInFiles: try members.assertions("licenseInfoInFiles", ISO_5962.Package.simple),
             licenseComments: try members.string("licenseComments"),
             copyrightText: copyrightText,
             comment: try members.string("comment"),

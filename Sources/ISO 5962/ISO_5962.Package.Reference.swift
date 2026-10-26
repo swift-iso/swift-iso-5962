@@ -1,3 +1,5 @@
+public import ISO_5962_License_Expression
+
 extension ISO_5962.Package {
     public struct Reference: Sendable, Hashable {
         public let category: ISO_5962.Package.Reference.Category

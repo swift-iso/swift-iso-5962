@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 import RFC_3986
 public import RFC_8259
 
@@ -8,14 +9,18 @@ extension ISO_5962.Document {
         "files", "snippets", "relationships",
     ]
 
+    public static let version = "SPDX-2.2"
+
+    public static let license = "CC0-1.0"
+
     static let identifier = "SPDXRef-DOCUMENT"
 
     public init(json: RFC_8259.Value) throws(ISO_5962.Error) {
         let members = try ISO_5962.Members(json, known: Self.keys)
         guard let version = try members.string("spdxVersion") else { throw .missing("spdxVersion") }
-        guard version == ISO_5962.version else { throw .invalid("spdxVersion") }
+        guard version == Self.version else { throw .invalid("spdxVersion") }
         guard let license = try members.string("dataLicense") else { throw .missing("dataLicense") }
-        guard license == ISO_5962.license else { throw .invalid("dataLicense") }
+        guard license == Self.license else { throw .invalid("dataLicense") }
         guard let identifier = try members.string("SPDXID") else { throw .missing("SPDXID") }
         guard identifier == Self.identifier else { throw .invalid("SPDXID") }
         guard let name = try members.string("name") else { throw .missing("name") }
@@ -40,8 +45,8 @@ extension ISO_5962.Document {
 
     public var json: RFC_8259.Value {
         ISO_5962.Members.object([
-            ("spdxVersion", .string(ISO_5962.version)),
-            ("dataLicense", .string(ISO_5962.license)),
+            ("spdxVersion", .string(Self.version)),
+            ("dataLicense", .string(Self.license)),
             ("SPDXID", .string(Self.identifier)),
             ("name", .string(name)),
             ("documentNamespace", .string(namespace.value)),

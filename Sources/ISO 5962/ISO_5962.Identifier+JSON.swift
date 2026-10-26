@@ -1,13 +1,10 @@
+public import ISO_5962_License_Expression
 public import RFC_8259
 
 extension ISO_5962.Identifier {
     static let prefix = "SPDXRef-"
 
     static let reference = "DocumentRef-"
-
-    static func isValid(_ idstring: String) -> Bool {
-        !idstring.isEmpty && idstring.allSatisfy { $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "-" || $0 == ".") }
-    }
 
     public init(json: RFC_8259.Value) throws(ISO_5962.Error) {
         guard let text = json.string else { throw .malformed }

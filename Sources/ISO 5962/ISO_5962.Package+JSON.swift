@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 import RFC_3986
 public import RFC_8259
 
@@ -22,7 +23,7 @@ extension ISO_5962.Package {
         guard let licenseDeclared = try members.assertion("licenseDeclared", Self.expression) else {
             throw .missing("licenseDeclared")
         }
-        guard let copyrightText = try members.assertion("copyrightText", Self.expression) else {
+        guard let copyrightText = try members.assertion("copyrightText", Self.text) else {
             throw .missing("copyrightText")
         }
         self.init(
@@ -38,7 +39,7 @@ extension ISO_5962.Package {
             homepage: try members.assertion("homepage", ISO_5962.Members.uri),
             sourceInfo: try members.string("sourceInfo"),
             licenseConcluded: licenseConcluded,
-            licenseInfoFromFiles: try members.assertions("licenseInfoFromFiles", Self.expression),
+            licenseInfoFromFiles: try members.assertions("licenseInfoFromFiles", Self.simple),
             licenseDeclared: licenseDeclared,
             licenseComments: try members.string("licenseComments"),
             copyrightText: copyrightText,
@@ -52,9 +53,27 @@ extension ISO_5962.Package {
         )
     }
 
-    static func expression(_ json: RFC_8259.Value) throws(ISO_5962.Error) -> String {
+    static func text(_ json: RFC_8259.Value) throws(ISO_5962.Error) -> String {
         guard let text = json.string else { throw .malformed }
         return text
+    }
+
+    static func expression(_ json: RFC_8259.Value) throws(ISO_5962.Error) -> ISO_5962.Expression {
+        guard let text = json.string else { throw .malformed }
+        do throws(ISO_5962.Expression.Error) {
+            return try ISO_5962.Expression(text)
+        } catch {
+            throw .malformed
+        }
+    }
+
+    static func simple(_ json: RFC_8259.Value) throws(ISO_5962.Error) -> ISO_5962.Expression.Simple {
+        guard let text = json.string else { throw .malformed }
+        do throws(ISO_5962.Expression.Error) {
+            return try ISO_5962.Expression.Simple(text)
+        } catch {
+            throw .malformed
+        }
     }
 
     static func analysis(_ members: ISO_5962.Members) throws(ISO_5962.Error) -> ISO_5962.Package.Analysis {

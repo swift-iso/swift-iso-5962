@@ -1,3 +1,4 @@
+public import ISO_5962_License_Expression
 public import RFC_3986
 
 extension ISO_5962.Document {
@@ -7,7 +8,7 @@ extension ISO_5962.Document {
         public let checksum: ISO_5962.Checksum
 
         public init(identifier: String, document: RFC_3986.URI, checksum: ISO_5962.Checksum) throws(ISO_5962.Error) {
-            guard ISO_5962.Identifier.isValid(identifier) else { throw .invalid("externalDocumentId") }
+            guard ISO_5962.isIdstring(identifier) else { throw .invalid("externalDocumentId") }
             self.identifier = identifier
             self.document = document
             self.checksum = checksum

@@ -1,11 +1,13 @@
+public import ISO_5962_License_Expression
+
 extension ISO_5962 {
     public struct File: Sendable, Hashable {
         public let identifier: ISO_5962.Identifier
         public let name: String
         public let types: [ISO_5962.File.Kind]
         public let checksums: [ISO_5962.Checksum]
-        public let licenseConcluded: ISO_5962.Assertion<String>
-        public let licenseInfoInFiles: [ISO_5962.Assertion<String>]
+        public let licenseConcluded: ISO_5962.Assertion<ISO_5962.Expression>
+        public let licenseInfoInFiles: [ISO_5962.Assertion<ISO_5962.Expression.Simple>]
         public let licenseComments: String?
         public let copyrightText: ISO_5962.Assertion<String>
         public let comment: String?
@@ -19,8 +21,8 @@ extension ISO_5962 {
             name: String,
             types: [ISO_5962.File.Kind] = [],
             checksums: [ISO_5962.Checksum],
-            licenseConcluded: ISO_5962.Assertion<String>,
-            licenseInfoInFiles: [ISO_5962.Assertion<String>],
+            licenseConcluded: ISO_5962.Assertion<ISO_5962.Expression>,
+            licenseInfoInFiles: [ISO_5962.Assertion<ISO_5962.Expression.Simple>],
             licenseComments: String? = nil,
             copyrightText: ISO_5962.Assertion<String>,
             comment: String? = nil,

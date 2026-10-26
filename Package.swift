@@ -12,7 +12,8 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "ISO 5962", targets: ["ISO 5962"])
+        .library(name: "ISO 5962", targets: ["ISO 5962"]),
+        .library(name: "ISO 5962 License Expression", targets: ["ISO 5962 License Expression"]),
     ],
     dependencies: [
         .package(url: "https://github.com/swift-ietf/swift-rfc-8259.git", branch: "main"),
@@ -22,9 +23,11 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
     ],
     targets: [
+        .target(name: "ISO 5962 License Expression"),
         .target(
             name: "ISO 5962",
             dependencies: [
+                .target(name: "ISO 5962 License Expression"),
                 .product(name: "RFC 8259", package: "swift-rfc-8259"),
                 .product(name: "ISO 8601", package: "swift-iso-8601"),
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
@@ -33,9 +36,16 @@ let package = Package(
             ]
         ),
         .testTarget(
+            name: "ISO 5962 License Expression Tests",
+            dependencies: [
+                .target(name: "ISO 5962 License Expression")
+            ]
+        ),
+        .testTarget(
             name: "ISO 5962 Tests",
             dependencies: [
                 .target(name: "ISO 5962"),
+                .target(name: "ISO 5962 License Expression"),
                 .product(name: "RFC 8259", package: "swift-rfc-8259"),
                 .product(name: "ISO 8601", package: "swift-iso-8601"),
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),

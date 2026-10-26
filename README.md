@@ -18,13 +18,15 @@ document.relationships.first?.kind        // ISO_5962.Relationship.Kind
 try ISO_5962.Document(json: document.json) == document
 ```
 
+The license members are `ISO_5962.Expression`, the SPDX license expression grammar of Annex D: simple expressions (a license identifier, the `+` for later versions, `LicenseRef-` and `DocumentRef-…:LicenseRef-` references), `WITH` exceptions, and `AND` / `OR` with their precedence. Operators are case-sensitive, as Annex D says. The grammar is its own product, `ISO 5962 License Expression`, so CycloneDX (ECMA-424) can use it without the SPDX document model.
+
 `ISO_5962.Assertion` carries the specification's special values: `.absent` is `NONE` and `.unasserted` is `NOASSERTION`. Checksums are bytes checked against their algorithm's length, so a `FIPS_180_4.Digest`'s `bytes` can be used as an `ISO_5962.Checksum`'s value directly.
 
 ## What is left out
 
 Snippets, the deprecated reviewer information, file `artifactOfs` and `fileDependencies`, and the cross-references of extracted licenses are accepted and dropped when read. A verification code is not required when files were analyzed, and a file is not required to carry a SHA1 checksum, although the specification text asks for both.
 
-License expressions, license identifiers and package URLs are kept as text: the SPDX license expression grammar (Annex D) and the SPDX license list are not modelled here, and neither is the package URL grammar of ECMA-427.
+License identifiers are checked against the idstring grammar, not against the SPDX license list, which is a separately released data set; identifiers compare exactly, although Annex D matches them case-insensitively. Package URLs in external references are kept as text.
 
 ## Later editions
 

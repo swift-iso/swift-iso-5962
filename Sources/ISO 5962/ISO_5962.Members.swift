@@ -1,5 +1,6 @@
 import Binary
 import Byte
+public import ISO_5962_License_Expression
 import RFC_3986
 import RFC_8259
 
@@ -129,12 +130,8 @@ extension ISO_5962.Members {
         value.map { RFC_8259.Value.string($0) }
     }
 
-    static func asserted(_ assertion: ISO_5962.Assertion<String>) -> RFC_8259.Value {
-        assertion.json { RFC_8259.Value.string($0) }
-    }
-
-    static func asserted(_ assertion: ISO_5962.Assertion<RFC_3986.URI>) -> RFC_8259.Value {
-        assertion.json { RFC_8259.Value.string($0.value) }
+    static func asserted<Value: CustomStringConvertible>(_ assertion: ISO_5962.Assertion<Value>) -> RFC_8259.Value {
+        assertion.json { RFC_8259.Value.string($0.description) }
     }
 
     static func array(_ elements: [RFC_8259.Value]) -> RFC_8259.Value? {

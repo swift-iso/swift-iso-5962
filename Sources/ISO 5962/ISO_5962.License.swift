@@ -1,3 +1,5 @@
+public import ISO_5962_License_Expression
+
 extension ISO_5962 {
     public struct License: Sendable, Hashable {
         public let identifier: String
@@ -13,7 +15,7 @@ extension ISO_5962 {
             seeAlsos: [String] = [],
             comment: String? = nil
         ) throws(ISO_5962.Error) {
-            guard ISO_5962.Identifier.isValid(identifier) else { throw .invalid("licenseId") }
+            guard ISO_5962.isIdstring(identifier) else { throw .invalid("licenseId") }
             self.identifier = identifier
             self.text = text
             self.name = name
