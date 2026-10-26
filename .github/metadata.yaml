@@ -1,0 +1,11 @@
+# .github/metadata.yaml
+description: "Swift implementation of ISO/IEC 5962: SPDX Specification V2.2.1."
+topics:
+  - standards
+  - iso
+  - iso-5962
+  - spdx
+  - sbom
+homepage: "https://swift-institute.org"
+readme:
+  family: E
