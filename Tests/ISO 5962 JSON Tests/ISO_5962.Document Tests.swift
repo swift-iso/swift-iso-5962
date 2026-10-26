@@ -3,6 +3,7 @@ import ISO_5962
 import ISO_5962_License_Expression
 import ISO_8601
 import JSON
+import RFC_3986
 import RFC_8259
 import Testing
 

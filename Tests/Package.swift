@@ -17,6 +17,7 @@ let package = Package(
         .package(url: "https://github.com/swift-ietf/swift-rfc-8259.git", branch: "main"),
         .package(url: "https://github.com/swift-iso/swift-iso-8601.git", branch: "main"),
         .package(url: "https://github.com/swift-ecma/swift-ecma-427.git", branch: "main"),
+        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
     ],
     targets: [
         .testTarget(
@@ -28,6 +29,7 @@ let package = Package(
                 .product(name: "RFC 8259", package: "swift-rfc-8259"),
                 .product(name: "ISO 8601", package: "swift-iso-8601"),
                 .product(name: "ECMA 427", package: "swift-ecma-427"),
+                .product(name: "RFC 3986", package: "swift-rfc-3986"),
             ],
             path: "ISO 5962 JSON Tests"
         )
