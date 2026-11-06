@@ -2,11 +2,11 @@
 import ISO_5962
 import ISO_5962_License_Expression
 
-extension ISO_5962.Document.Test {
+extension `ISO_5962.Document Tests`.Test {
     enum Example {}
 }
 
-extension ISO_5962.Document.Test.Example {
+extension `ISO_5962.Document Tests`.Test.Example {
     static let document = #"""
         {
           "SPDXID" : "SPDXRef-DOCUMENT",

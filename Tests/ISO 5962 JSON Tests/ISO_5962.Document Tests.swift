@@ -7,30 +7,32 @@ import RFC_3986
 import RFC_8259
 import Testing
 
-extension ISO_5962.Document {
+enum `ISO_5962.Document Tests` {}
+
+extension `ISO_5962.Document Tests` {
     @Suite struct Test {
         @Suite struct Integration {}
     }
 }
 
-extension ISO_5962.Document.Test {
+extension `ISO_5962.Document Tests`.Test {
     static func example() throws -> ISO_5962.Document {
-        try ISO_5962.Document(json: RFC_8259.Value(try JSON.parse(ISO_5962.Document.Test.Example.document)))
+        try ISO_5962.Document(json: RFC_8259.Value(try JSON.parse(`ISO_5962.Document Tests`.Test.Example.document)))
     }
 }
 
-extension ISO_5962.Document.Test.Integration {
+extension `ISO_5962.Document Tests`.Test.Integration {
 
     @Test
     func `the example document round-trips through JSON text`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let text = JSON(document.json).serialize()
         #expect(try ISO_5962.Document(json: RFC_8259.Value(try JSON.parse(text))) == document)
     }
 
     @Test
     func `the example's package manager reference is a package URL`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let doap = try #require(document.packages.first { $0.identifier.element == "fromDoap-0" })
         let expected = try ECMA_427.PURL("pkg:maven/org.apache.jena/apache-jena@3.12.0")
         #expect(doap.externalRefs.first?.locator == .purl(expected))
@@ -39,13 +41,13 @@ extension ISO_5962.Document.Test.Integration {
 
     @Test
     func `the SPDX 2.2 example document round-trips through its JSON value`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         #expect(try ISO_5962.Document(json: document.json) == document)
     }
 
     @Test
     func `the example's document information is read`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let created = try ISO_8601.DateTime("2010-01-29T18:30:22Z")
         #expect(document.name == "SPDX-Tools-v2.0")
         #expect(document.namespace.value == "http://spdx.org/spdxdocs/spdx-example-444504E0-4F89-41D3-9A0C-0305E82C3301")
@@ -63,7 +65,7 @@ extension ISO_5962.Document.Test.Integration {
 
     @Test
     func `the example's packages carry assertions, checksums and references`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let glibc = try #require(document.packages.first)
         let expected: [ISO_5962.Checksum.Algorithm] = [.md5, .sha1, .sha256]
         #expect(glibc.identifier.element == "Package")
@@ -84,7 +86,7 @@ extension ISO_5962.Document.Test.Integration {
 
     @Test
     func `the example's relationships may point into another document or at nothing asserted`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let copy = try #require(document.relationships.first { $0.kind == .copyOf })
         let tools = try ISO_5962.Identifier("ToolsElement", document: "spdx-tool-1.2")
         #expect(copy.related == .value(tools))
@@ -97,7 +99,7 @@ extension ISO_5962.Document.Test.Integration {
 
     @Test
     func `the example's files and extracted licenses are read`() throws {
-        let document = try ISO_5962.Document.Test.example()
+        let document = try `ISO_5962.Document Tests`.Test.example()
         let file = try #require(document.files.first { $0.identifier.element == "File" })
         let types: [ISO_5962.File.Kind] = [.source]
         #expect(file.types == types)

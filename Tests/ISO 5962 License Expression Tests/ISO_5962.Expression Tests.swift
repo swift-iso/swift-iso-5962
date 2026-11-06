@@ -1,14 +1,16 @@
 import ISO_5962_License_Expression
 import Testing
 
-extension ISO_5962.Expression {
+enum `ISO_5962.Expression Tests` {}
+
+extension `ISO_5962.Expression Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
     }
 }
 
-extension ISO_5962.Expression.Test.Unit {
+extension `ISO_5962.Expression Tests`.Test.Unit {
 
     @Test(arguments: [
         "MIT",
@@ -51,7 +53,7 @@ extension ISO_5962.Expression.Test.Unit {
     }
 }
 
-extension ISO_5962.Expression.Test.`Edge Case` {
+extension `ISO_5962.Expression Tests`.Test.`Edge Case` {
 
     @Test(arguments: ["", "MIT AND", "(MIT", "MIT WITH", "a OR"])
     func `an expression that ends early is incomplete`(text: String) {
