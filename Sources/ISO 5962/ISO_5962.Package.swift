@@ -6,6 +6,8 @@ extension ISO_5962 {
         public let identifier: ISO_5962.Identifier
         public let name: String
         public let versionInfo: String?
+        // swift-linter:disable:next raw concept
+        // REASON: SPDX's packageFileName, the package's file name or a relative directory path as the document's author wrote it, not a path on this file system; looked at Path and Path.Component, which hold this platform's names and aren't among this package's dependencies.
         public let fileName: String?
         public let supplier: ISO_5962.Assertion<ISO_5962.Creator>?
         public let originator: ISO_5962.Assertion<ISO_5962.Creator>?
@@ -31,6 +33,8 @@ extension ISO_5962 {
             identifier: ISO_5962.Identifier,
             name: String,
             versionInfo: String? = nil,
+            // swift-linter:disable:next raw concept
+            // REASON: SPDX's packageFileName, the package's file name or a relative directory path as the document's author wrote it, not a path on this file system; looked at Path and Path.Component, which hold this platform's names and aren't among this package's dependencies.
             fileName: String? = nil,
             supplier: ISO_5962.Assertion<ISO_5962.Creator>? = nil,
             originator: ISO_5962.Assertion<ISO_5962.Creator>? = nil,
