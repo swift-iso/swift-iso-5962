@@ -29,6 +29,14 @@ extension ISO_5962 {
             annotations: [ISO_5962.Annotation] = []
         ) throws(ISO_5962.Error) {
             guard !namespace.isRelative, namespace.fragment == nil else { throw .invalid("documentNamespace") }
+            let elements = packages.map(\.identifier) + files.map(\.identifier)
+            if let duplicate = ISO_5962.Document.duplicate(in: [ISO_5962.Document.identifier] + elements.map(\.description)) {
+                throw .duplicate(duplicate)
+            }
+            let references = externalDocumentRefs.map { ISO_5962.Identifier.reference + $0.identifier }
+            if let duplicate = ISO_5962.Document.duplicate(in: references) { throw .duplicate(duplicate) }
+            let licenses = hasExtractedLicensingInfos.map { ISO_5962.License.prefix + $0.identifier }
+            if let duplicate = ISO_5962.Document.duplicate(in: licenses) { throw .duplicate(duplicate) }
             self.name = name
             self.namespace = namespace
             self.creationInfo = creationInfo
@@ -41,5 +49,12 @@ extension ISO_5962 {
             self.hasExtractedLicensingInfos = hasExtractedLicensingInfos
             self.annotations = annotations
         }
+    }
+}
+
+extension ISO_5962.Document {
+    static func duplicate(in identifiers: [String]) -> String? {
+        var seen: Set<String> = []
+        return identifiers.first { !seen.insert($0).inserted }
     }
 }

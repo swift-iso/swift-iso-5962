@@ -143,6 +143,34 @@ extension `ISO_5962.Document Tests`.Test.`Edge Case` {
     }
 
     @Test
+    func `two elements with one identifier are refused`() {
+        #expect(throws: ISO_5962.Error.duplicate("SPDXRef-Package")) {
+            try ISO_5962.Document(
+                json: `ISO_5962.Document Tests`.Test.minimal([
+                    ("packages", [`ISO_5962.Document Tests`.Test.package(), `ISO_5962.Document Tests`.Test.package()])
+                ])
+            )
+        }
+        #expect(throws: ISO_5962.Error.duplicate("SPDXRef-DOCUMENT")) {
+            try ISO_5962.Document(
+                json: `ISO_5962.Document Tests`.Test.minimal([
+                    ("packages", [`ISO_5962.Document Tests`.Test.package([("SPDXID", "SPDXRef-DOCUMENT")])])
+                ])
+            )
+        }
+    }
+
+    @Test
+    func `two extracted licenses with one identifier are refused`() {
+        let license: RFC_8259.Value = ["licenseId": "LicenseRef-1", "extractedText": "text"]
+        #expect(throws: ISO_5962.Error.duplicate("LicenseRef-1")) {
+            try ISO_5962.Document(
+                json: `ISO_5962.Document Tests`.Test.minimal([("hasExtractedLicensingInfos", [license, license])])
+            )
+        }
+    }
+
+    @Test
     func `a member the schema does not define is refused`() {
         #expect(throws: ISO_5962.Error.unexpected("spdxversion")) {
             try ISO_5962.Document(json: `ISO_5962.Document Tests`.Test.minimal([("spdxversion", "SPDX-2.2")]))
