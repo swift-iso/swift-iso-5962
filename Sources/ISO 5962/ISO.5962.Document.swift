@@ -1,0 +1,60 @@
+public import ISO_5962_License_Expression
+public import RFC_3986
+
+extension ISO.`5962` {
+    public struct Document: Sendable, Hashable {
+        public let name: String
+        public let namespace: RFC_3986.URI
+        public let creationInfo: ISO.`5962`.Creation
+        public let comment: String?
+        public let externalDocumentRefs: [ISO.`5962`.Document.Reference]
+        public let describes: [ISO.`5962`.Identifier]
+        public let packages: [ISO.`5962`.Package]
+        public let files: [ISO.`5962`.File]
+        public let relationships: [ISO.`5962`.Relationship]
+        public let hasExtractedLicensingInfos: [ISO.`5962`.License]
+        public let annotations: [ISO.`5962`.Annotation]
+
+        public init(
+            name: String,
+            namespace: RFC_3986.URI,
+            creationInfo: ISO.`5962`.Creation,
+            comment: String? = nil,
+            externalDocumentRefs: [ISO.`5962`.Document.Reference] = [],
+            describes: [ISO.`5962`.Identifier] = [],
+            packages: [ISO.`5962`.Package] = [],
+            files: [ISO.`5962`.File] = [],
+            relationships: [ISO.`5962`.Relationship] = [],
+            hasExtractedLicensingInfos: [ISO.`5962`.License] = [],
+            annotations: [ISO.`5962`.Annotation] = []
+        ) throws(ISO.`5962`.Error) {
+            guard !namespace.isRelative, namespace.fragment == nil else { throw .invalid("documentNamespace") }
+            let elements = packages.map(\.identifier) + files.map(\.identifier)
+            if let duplicate = ISO.`5962`.Document.duplicate(in: [ISO.`5962`.Document.identifier] + elements.map(\.description)) {
+                throw .duplicate(duplicate)
+            }
+            let references = externalDocumentRefs.map { ISO.`5962`.Identifier.reference + $0.identifier }
+            if let duplicate = ISO.`5962`.Document.duplicate(in: references) { throw .duplicate(duplicate) }
+            let licenses = hasExtractedLicensingInfos.map { ISO.`5962`.License.prefix + $0.identifier }
+            if let duplicate = ISO.`5962`.Document.duplicate(in: licenses) { throw .duplicate(duplicate) }
+            self.name = name
+            self.namespace = namespace
+            self.creationInfo = creationInfo
+            self.comment = comment
+            self.externalDocumentRefs = externalDocumentRefs
+            self.describes = describes
+            self.packages = packages
+            self.files = files
+            self.relationships = relationships
+            self.hasExtractedLicensingInfos = hasExtractedLicensingInfos
+            self.annotations = annotations
+        }
+    }
+}
+
+extension ISO.`5962`.Document {
+    static func duplicate(in identifiers: [String]) -> String? {
+        var seen: Set<String> = []
+        return identifiers.first { !seen.insert($0).inserted }
+    }
+}

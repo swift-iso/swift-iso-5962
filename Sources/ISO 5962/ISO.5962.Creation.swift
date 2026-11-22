@@ -1,0 +1,25 @@
+public import ISO_5962_License_Expression
+public import ISO_8601
+
+extension ISO.`5962` {
+    public struct Creation: Sendable, Hashable {
+        public let created: ISO.`8601`.DateTime
+        public let creators: [ISO.`5962`.Creator]
+        public let licenseListVersion: String?
+        public let comment: String?
+
+        public init(
+            created: ISO.`8601`.DateTime,
+            creators: [ISO.`5962`.Creator],
+            licenseListVersion: String? = nil,
+            comment: String? = nil
+        ) throws(ISO.`5962`.Error) {
+            guard created.offset == .utc else { throw .invalid("created") }
+            guard !creators.isEmpty else { throw .missing("creators") }
+            self.created = created
+            self.creators = creators
+            self.licenseListVersion = licenseListVersion
+            self.comment = comment
+        }
+    }
+}

@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "ISO 5962 License Expression", targets: ["ISO 5962 License Expression"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-iso/swift-iso.git", branch: "main"),
         .package(url: "https://github.com/swift-ietf/swift-rfc-8259.git", branch: "main"),
         .package(url: "https://github.com/swift-iso/swift-iso-8601.git", branch: "main"),
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
@@ -24,7 +25,12 @@ let package = Package(
         .package(url: "https://github.com/swift-ecma/swift-ecma-427.git", branch: "main"),
     ],
     targets: [
-        .target(name: "ISO 5962 License Expression"),
+        .target(
+            name: "ISO 5962 License Expression",
+            dependencies: [
+                .product(name: "ISO", package: "swift-iso")
+            ]
+        ),
         .target(
             name: "ISO 5962",
             dependencies: [
