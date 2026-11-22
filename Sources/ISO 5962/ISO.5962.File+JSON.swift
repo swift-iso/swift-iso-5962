@@ -8,7 +8,7 @@ extension ISO.`5962`.File {
         "licenseConcluded", "fileDependencies",
     ]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let identifier = try members.value("SPDXID", ISO.`5962`.Identifier.init(json:)) else { throw .missing("SPDXID") }
         guard let name = try members.string("fileName") else { throw .missing("fileName") }
@@ -35,7 +35,7 @@ extension ISO.`5962`.File {
         )
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("SPDXID", identifier.json),
             ("fileName", .string(name)),

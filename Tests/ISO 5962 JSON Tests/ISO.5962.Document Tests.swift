@@ -17,7 +17,7 @@ extension `ISO.5962.Document Tests` {
 
 extension `ISO.5962.Document Tests`.Test {
     static func example() throws -> ISO.`5962`.Document {
-        try ISO.`5962`.Document(json: RFC_8259.Value(try JSON.parse(`ISO.5962.Document Tests`.Test.Example.document)))
+        try ISO.`5962`.Document(json: IETF.RFC.`8259`.Value(try JSON.parse(`ISO.5962.Document Tests`.Test.Example.document)))
     }
 }
 
@@ -27,7 +27,7 @@ extension `ISO.5962.Document Tests`.Test.Integration {
     func `the example document round-trips through JSON text`() throws {
         let document = try `ISO.5962.Document Tests`.Test.example()
         let text = JSON(document.json).serialize()
-        #expect(try ISO.`5962`.Document(json: RFC_8259.Value(try JSON.parse(text))) == document)
+        #expect(try ISO.`5962`.Document(json: IETF.RFC.`8259`.Value(try JSON.parse(text))) == document)
     }
 
     @Test

@@ -6,9 +6,9 @@ import RFC_8259
 
 extension ISO.`5962` {
     struct Members {
-        let object: RFC_8259.Object
+        let object: IETF.RFC.`8259`.Object
 
-        init(_ json: RFC_8259.Value, known: Swift::Set<Swift::String>) throws(ISO.`5962`.Error) {
+        init(_ json: IETF.RFC.`8259`.Value, known: Swift::Set<Swift::String>) throws(ISO.`5962`.Error) {
             guard let object = json.object else { throw .malformed }
             if let unknown = object.keys.first(where: { !known.contains($0) }) {
                 throw .unexpected(unknown)
@@ -25,7 +25,7 @@ extension ISO.`5962`.Members {
         return text
     }
 
-    func uri(_ key: String) throws(ISO.`5962`.Error) -> RFC_3986.URI? {
+    func uri(_ key: String) throws(ISO.`5962`.Error) -> IETF.RFC.`3986`.URI? {
         try value(key, Self.uri)
     }
 
@@ -37,21 +37,21 @@ extension ISO.`5962`.Members {
 
     func assertion<Value>(
         _ key: String,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) -> ISO.`5962`.Assertion<Value>? {
         try value(key) { json throws(ISO.`5962`.Error) in try ISO.`5962`.Assertion(json: json, decode) }
     }
 
     func assertions<Value>(
         _ key: String,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) -> [ISO.`5962`.Assertion<Value>] {
         try values(key) { json throws(ISO.`5962`.Error) in try ISO.`5962`.Assertion(json: json, decode) }
     }
 
     func value<Value>(
         _ key: String,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) -> Value? {
         guard let member = object[key] else { return nil }
         return try Self.within(key, member, decode)
@@ -59,7 +59,7 @@ extension ISO.`5962`.Members {
 
     func values<Value>(
         _ key: String,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) -> [Value] {
         guard let member = object[key] else { return [] }
         guard let array = member.array else { throw .invalid(key) }
@@ -76,8 +76,8 @@ extension ISO.`5962`.Members {
 extension ISO.`5962`.Members {
     static func within<Value>(
         _ key: String,
-        _ json: RFC_8259.Value,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        _ json: IETF.RFC.`8259`.Value,
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) -> Value {
         do throws(ISO.`5962`.Error) {
             return try decode(json)
@@ -86,15 +86,15 @@ extension ISO.`5962`.Members {
         }
     }
 
-    static func text(_ json: RFC_8259.Value, _ key: String) throws(ISO.`5962`.Error) -> String {
+    static func text(_ json: IETF.RFC.`8259`.Value, _ key: String) throws(ISO.`5962`.Error) -> String {
         guard let text = json.string else { throw .invalid(key) }
         return text
     }
 
-    static func uri(_ json: RFC_8259.Value) throws(ISO.`5962`.Error) -> RFC_3986.URI {
+    static func uri(_ json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> IETF.RFC.`3986`.URI {
         guard let text = json.string else { throw .malformed }
-        do throws(RFC_3986.Error) {
-            return try RFC_3986.URI(text)
+        do throws(IETF.RFC.`3986`.Error) {
+            return try IETF.RFC.`3986`.URI(text)
         } catch {
             throw .malformed
         }
@@ -118,27 +118,27 @@ extension ISO.`5962`.Members {
 }
 
 extension ISO.`5962`.Members {
-    static func object(_ members: [(key: String, value: RFC_8259.Value?)]) -> RFC_8259.Value {
+    static func object(_ members: [(key: String, value: IETF.RFC.`8259`.Value?)]) -> IETF.RFC.`8259`.Value {
         .object(
-            RFC_8259.Object(
+            IETF.RFC.`8259`.Object(
                 members.compactMap { member in member.value.map { (key: member.key, value: $0) } }
             )
         )
     }
 
-    static func text(_ value: String?) -> RFC_8259.Value? {
-        value.map { RFC_8259.Value.string($0) }
+    static func text(_ value: String?) -> IETF.RFC.`8259`.Value? {
+        value.map { IETF.RFC.`8259`.Value.string($0) }
     }
 
-    static func asserted<Value: CustomStringConvertible>(_ assertion: ISO.`5962`.Assertion<Value>) -> RFC_8259.Value {
-        assertion.json { RFC_8259.Value.string($0.description) }
+    static func asserted<Value: CustomStringConvertible>(_ assertion: ISO.`5962`.Assertion<Value>) -> IETF.RFC.`8259`.Value {
+        assertion.json { IETF.RFC.`8259`.Value.string($0.description) }
     }
 
-    static func array(_ elements: [RFC_8259.Value]) -> RFC_8259.Value? {
-        elements.isEmpty ? nil : .array(RFC_8259.Array(elements))
+    static func array(_ elements: [IETF.RFC.`8259`.Value]) -> IETF.RFC.`8259`.Value? {
+        elements.isEmpty ? nil : .array(IETF.RFC.`8259`.Array(elements))
     }
 
-    static func strings(_ elements: [String]) -> RFC_8259.Value? {
-        array(elements.map { RFC_8259.Value.string($0) })
+    static func strings(_ elements: [String]) -> IETF.RFC.`8259`.Value? {
+        array(elements.map { IETF.RFC.`8259`.Value.string($0) })
     }
 }

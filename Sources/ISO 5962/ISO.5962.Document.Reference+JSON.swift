@@ -5,7 +5,7 @@ public import RFC_8259
 extension ISO.`5962`.Document.Reference {
     static let keys: Set<String> = ["externalDocumentId", "checksum", "spdxDocument"]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let id = try members.string("externalDocumentId") else { throw .missing("externalDocumentId") }
         guard id.hasPrefix(ISO.`5962`.Identifier.reference) else { throw .invalid("externalDocumentId") }
@@ -18,7 +18,7 @@ extension ISO.`5962`.Document.Reference {
         )
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("externalDocumentId", .string(ISO.`5962`.Identifier.reference + identifier)),
             ("checksum", checksum.json),

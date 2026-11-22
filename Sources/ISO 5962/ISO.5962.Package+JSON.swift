@@ -10,7 +10,7 @@ extension ISO.`5962`.Package {
         "versionInfo", "sourceInfo", "description",
     ]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let identifier = try members.value("SPDXID", ISO.`5962`.Identifier.init(json:)) else { throw .missing("SPDXID") }
         guard let name = try members.string("name") else { throw .missing("name") }
@@ -53,12 +53,12 @@ extension ISO.`5962`.Package {
         )
     }
 
-    static func text(_ json: RFC_8259.Value) throws(ISO.`5962`.Error) -> String {
+    static func text(_ json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> String {
         guard let text = json.string else { throw .malformed }
         return text
     }
 
-    static func expression(_ json: RFC_8259.Value) throws(ISO.`5962`.Error) -> ISO.`5962`.Expression {
+    static func expression(_ json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> ISO.`5962`.Expression {
         guard let text = json.string else { throw .malformed }
         do throws(ISO.`5962`.Expression.Error) {
             return try ISO.`5962`.Expression(text)
@@ -67,7 +67,7 @@ extension ISO.`5962`.Package {
         }
     }
 
-    static func simple(_ json: RFC_8259.Value) throws(ISO.`5962`.Error) -> ISO.`5962`.Expression.Simple {
+    static func simple(_ json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> ISO.`5962`.Expression.Simple {
         guard let text = json.string else { throw .malformed }
         do throws(ISO.`5962`.Expression.Error) {
             return try ISO.`5962`.Expression.Simple(text)
@@ -83,9 +83,9 @@ extension ISO.`5962`.Package {
         return .unanalyzed
     }
 
-    public var json: RFC_8259.Value {
-        let filesAnalyzed: RFC_8259.Value
-        let verification: RFC_8259.Value?
+    public var json: IETF.RFC.`8259`.Value {
+        let filesAnalyzed: IETF.RFC.`8259`.Value
+        let verification: IETF.RFC.`8259`.Value?
         switch analysis {
         case .analyzed(let code):
             filesAnalyzed = .bool(true)

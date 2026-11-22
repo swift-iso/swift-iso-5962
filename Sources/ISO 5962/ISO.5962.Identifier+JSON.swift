@@ -6,7 +6,7 @@ extension ISO.`5962`.Identifier {
 
     static let reference = "DocumentRef-"
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         guard let text = json.string else { throw .malformed }
         let parts = text.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
         let document: String?
@@ -27,5 +27,5 @@ extension ISO.`5962`.Identifier {
         }
     }
 
-    public var json: RFC_8259.Value { .string(description) }
+    public var json: IETF.RFC.`8259`.Value { .string(description) }
 }

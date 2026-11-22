@@ -4,7 +4,7 @@ public import RFC_3986
 extension ISO.`5962` {
     public struct Document: Sendable, Hashable {
         public let name: String
-        public let namespace: RFC_3986.URI
+        public let namespace: IETF.RFC.`3986`.URI
         public let creationInfo: ISO.`5962`.Creation
         public let comment: String?
         public let externalDocumentRefs: [ISO.`5962`.Document.Reference]
@@ -17,7 +17,7 @@ extension ISO.`5962` {
 
         public init(
             name: String,
-            namespace: RFC_3986.URI,
+            namespace: IETF.RFC.`3986`.URI,
             creationInfo: ISO.`5962`.Creation,
             comment: String? = nil,
             externalDocumentRefs: [ISO.`5962`.Document.Reference] = [],

@@ -11,10 +11,10 @@ extension ISO.`5962` {
         public let fileName: String?
         public let supplier: ISO.`5962`.Assertion<ISO.`5962`.Creator>?
         public let originator: ISO.`5962`.Assertion<ISO.`5962`.Creator>?
-        public let downloadLocation: ISO.`5962`.Assertion<RFC_3986.URI>
+        public let downloadLocation: ISO.`5962`.Assertion<IETF.RFC.`3986`.URI>
         public let analysis: ISO.`5962`.Package.Analysis
         public let checksums: [ISO.`5962`.Checksum]
-        public let homepage: ISO.`5962`.Assertion<RFC_3986.URI>?
+        public let homepage: ISO.`5962`.Assertion<IETF.RFC.`3986`.URI>?
         public let sourceInfo: String?
         public let licenseConcluded: ISO.`5962`.Assertion<ISO.`5962`.Expression>
         public let licenseInfoFromFiles: [ISO.`5962`.Assertion<ISO.`5962`.Expression.Simple>]
@@ -38,10 +38,10 @@ extension ISO.`5962` {
             fileName: String? = nil,
             supplier: ISO.`5962`.Assertion<ISO.`5962`.Creator>? = nil,
             originator: ISO.`5962`.Assertion<ISO.`5962`.Creator>? = nil,
-            downloadLocation: ISO.`5962`.Assertion<RFC_3986.URI>,
+            downloadLocation: ISO.`5962`.Assertion<IETF.RFC.`3986`.URI>,
             analysis: ISO.`5962`.Package.Analysis = .analyzed(nil),
             checksums: [ISO.`5962`.Checksum] = [],
-            homepage: ISO.`5962`.Assertion<RFC_3986.URI>? = nil,
+            homepage: ISO.`5962`.Assertion<IETF.RFC.`3986`.URI>? = nil,
             sourceInfo: String? = nil,
             licenseConcluded: ISO.`5962`.Assertion<ISO.`5962`.Expression>,
             licenseInfoFromFiles: [ISO.`5962`.Assertion<ISO.`5962`.Expression.Simple>] = [],

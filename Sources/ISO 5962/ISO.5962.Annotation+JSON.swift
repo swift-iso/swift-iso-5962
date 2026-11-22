@@ -5,7 +5,7 @@ public import RFC_8259
 extension ISO.`5962`.Annotation {
     static let keys: Set<String> = ["annotationDate", "comment", "annotator", "annotationType"]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let date = try members.value("annotationDate", ISO.`5962`.Creation.time) else { throw .missing("annotationDate") }
         guard let kind = try members.value("annotationType", Kind.init(json:)) else { throw .missing("annotationType") }
@@ -14,7 +14,7 @@ extension ISO.`5962`.Annotation {
         self.init(date: date, kind: kind, annotator: annotator, comment: comment)
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("annotationDate", .string(date.description)),
             ("annotationType", kind.json),

@@ -5,7 +5,7 @@ public import RFC_8259
 extension ISO.`5962`.Creation {
     static let keys: Set<String> = ["comment", "created", "creators", "licenseListVersion"]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let created = try members.value("created", Self.time) else { throw .missing("created") }
         try self.init(
@@ -16,7 +16,7 @@ extension ISO.`5962`.Creation {
         )
     }
 
-    static func time(_ json: RFC_8259.Value) throws(ISO.`5962`.Error) -> ISO.`8601`.DateTime {
+    static func time(_ json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> ISO.`8601`.DateTime {
         guard let text = json.string else { throw .malformed }
         let time: ISO.`8601`.DateTime
         do throws(ISO.`8601`.DateTime.Parser.Error) {
@@ -28,7 +28,7 @@ extension ISO.`5962`.Creation {
         return time
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("comment", ISO.`5962`.Members.text(comment)),
             ("created", .string(created.description)),

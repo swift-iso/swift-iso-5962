@@ -6,7 +6,7 @@ extension ISO.`5962`.License {
 
     static let prefix = "LicenseRef-"
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let id = try members.string("licenseId") else { throw .missing("licenseId") }
         guard id.hasPrefix(Self.prefix) else { throw .invalid("licenseId") }
@@ -20,7 +20,7 @@ extension ISO.`5962`.License {
         )
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("licenseId", .string(Self.prefix + identifier)),
             ("extractedText", .string(text)),

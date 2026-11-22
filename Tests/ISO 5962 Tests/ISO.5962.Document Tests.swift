@@ -16,9 +16,9 @@ extension `ISO.5962.Document Tests` {
 
 extension `ISO.5962.Document Tests`.Test {
     static func minimal(
-        _ members: [(key: String, value: RFC_8259.Value)] = []
-    ) -> RFC_8259.Value {
-        var object = RFC_8259.Object([
+        _ members: [(key: String, value: IETF.RFC.`8259`.Value)] = []
+    ) -> IETF.RFC.`8259`.Value {
+        var object = IETF.RFC.`8259`.Object([
             ("spdxVersion", "SPDX-2.2"),
             ("dataLicense", "CC0-1.0"),
             ("SPDXID", "SPDXRef-DOCUMENT"),
@@ -30,8 +30,8 @@ extension `ISO.5962.Document Tests`.Test {
         return .object(object)
     }
 
-    static func package(_ members: [(key: String, value: RFC_8259.Value)] = []) -> RFC_8259.Value {
-        var object = RFC_8259.Object([
+    static func package(_ members: [(key: String, value: IETF.RFC.`8259`.Value)] = []) -> IETF.RFC.`8259`.Value {
+        var object = IETF.RFC.`8259`.Object([
             ("SPDXID", "SPDXRef-Package"),
             ("name", "package"),
             ("downloadLocation", "NOASSERTION"),
@@ -59,7 +59,7 @@ extension `ISO.5962.Document Tests`.Test.Unit {
         let package = ISO.`5962`.Package(
             identifier: try ISO.`5962`.Identifier("swift-rfc-8259"),
             name: "swift-rfc-8259",
-            downloadLocation: .value(try RFC_3986.URI("git+https://github.com/swift-ietf/swift-rfc-8259.git")),
+            downloadLocation: .value(try IETF.RFC.`3986`.URI("git+https://github.com/swift-ietf/swift-rfc-8259.git")),
             analysis: .unanalyzed,
             checksums: [
                 try ISO.`5962`.Checksum(algorithm: .sha256, value: [Byte](repeating: Byte(bitPattern: 0x0F), count: 32))
@@ -162,7 +162,7 @@ extension `ISO.5962.Document Tests`.Test.`Edge Case` {
 
     @Test
     func `two extracted licenses with one identifier are refused`() {
-        let license: RFC_8259.Value = ["licenseId": "LicenseRef-1", "extractedText": "text"]
+        let license: IETF.RFC.`8259`.Value = ["licenseId": "LicenseRef-1", "extractedText": "text"]
         #expect(throws: ISO.`5962`.Error.duplicate("LicenseRef-1")) {
             try ISO.`5962`.Document(
                 json: `ISO.5962.Document Tests`.Test.minimal([("hasExtractedLicensingInfos", [license, license])])
@@ -225,16 +225,16 @@ extension `ISO.5962.Document Tests`.Test.`Edge Case` {
 
     @Test
     func `a file needs a checksum and a license information entry`() {
-        let base: [(key: String, value: RFC_8259.Value)] = [
+        let base: [(key: String, value: IETF.RFC.`8259`.Value)] = [
             ("SPDXID", "SPDXRef-File"), ("fileName", "./a.swift"), ("licenseConcluded", "NOASSERTION"),
             ("copyrightText", "NONE"),
         ]
-        let checksum: RFC_8259.Value = ["algorithm": "SHA1", "checksumValue": "d6a770ba38583ed4bb4525bd96e50461655d2758"]
+        let checksum: IETF.RFC.`8259`.Value = ["algorithm": "SHA1", "checksumValue": "d6a770ba38583ed4bb4525bd96e50461655d2758"]
         #expect(throws: ISO.`5962`.Error.missing("checksums")) {
-            try ISO.`5962`.File(json: .object(RFC_8259.Object(base + [("licenseInfoInFiles", ["NOASSERTION"])])))
+            try ISO.`5962`.File(json: .object(IETF.RFC.`8259`.Object(base + [("licenseInfoInFiles", ["NOASSERTION"])])))
         }
         #expect(throws: ISO.`5962`.Error.missing("licenseInfoInFiles")) {
-            try ISO.`5962`.File(json: .object(RFC_8259.Object(base + [("checksums", [checksum])])))
+            try ISO.`5962`.File(json: .object(IETF.RFC.`8259`.Object(base + [("checksums", [checksum])])))
         }
     }
 

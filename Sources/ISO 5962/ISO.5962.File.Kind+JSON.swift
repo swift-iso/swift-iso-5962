@@ -2,10 +2,10 @@ public import ISO_5962_License_Expression
 public import RFC_8259
 
 extension ISO.`5962`.File.Kind {
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         guard let text = json.string, let value = Self(rawValue: text) else { throw .malformed }
         self = value
     }
 
-    public var json: RFC_8259.Value { .string(self.rawValue) }
+    public var json: IETF.RFC.`8259`.Value { .string(self.rawValue) }
 }

@@ -3,8 +3,8 @@ import RFC_8259
 
 extension ISO.`5962`.Assertion {
     init(
-        json: RFC_8259.Value,
-        _ decode: (RFC_8259.Value) throws(ISO.`5962`.Error) -> Value
+        json: IETF.RFC.`8259`.Value,
+        _ decode: (IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) -> Value
     ) throws(ISO.`5962`.Error) {
         switch json.string {
         case "NONE": self = .absent
@@ -13,7 +13,7 @@ extension ISO.`5962`.Assertion {
         }
     }
 
-    func json(_ encode: (Value) -> RFC_8259.Value) -> RFC_8259.Value {
+    func json(_ encode: (Value) -> IETF.RFC.`8259`.Value) -> IETF.RFC.`8259`.Value {
         switch self {
         case .value(let value): encode(value)
         case .absent: .string("NONE")

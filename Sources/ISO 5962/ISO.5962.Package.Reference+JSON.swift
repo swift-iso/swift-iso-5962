@@ -7,7 +7,7 @@ extension ISO.`5962`.Package.Reference {
 
     static let purl = "purl"
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let category = try members.value("referenceCategory", Category.init(json:)) else {
             throw .missing("referenceCategory")
@@ -26,7 +26,7 @@ extension ISO.`5962`.Package.Reference {
         }
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         let (type, locator): (String, String) =
             switch self.locator {
             case .purl(let purl): (Self.purl, purl.description)

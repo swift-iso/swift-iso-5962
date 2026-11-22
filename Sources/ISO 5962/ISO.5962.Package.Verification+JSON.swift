@@ -4,7 +4,7 @@ public import RFC_8259
 extension ISO.`5962`.Package.Verification {
     static let keys: Set<String> = ["packageVerificationCodeValue", "packageVerificationCodeExcludedFiles"]
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let value = try members.string("packageVerificationCodeValue") else {
             throw .missing("packageVerificationCodeValue")
@@ -15,7 +15,7 @@ extension ISO.`5962`.Package.Verification {
         )
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("packageVerificationCodeValue", .string(ISO.`5962`.Members.hex(value))),
             ("packageVerificationCodeExcludedFiles", ISO.`5962`.Members.strings(excluded)),

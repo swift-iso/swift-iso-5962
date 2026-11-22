@@ -15,7 +15,7 @@ extension ISO.`5962`.Document {
 
     static let identifier = "SPDXRef-DOCUMENT"
 
-    public init(json: RFC_8259.Value) throws(ISO.`5962`.Error) {
+    public init(json: IETF.RFC.`8259`.Value) throws(ISO.`5962`.Error) {
         let members = try ISO.`5962`.Members(json, known: Self.keys)
         guard let version = try members.string("spdxVersion") else { throw .missing("spdxVersion") }
         guard version == Self.version else { throw .invalid("spdxVersion") }
@@ -43,7 +43,7 @@ extension ISO.`5962`.Document {
         )
     }
 
-    public var json: RFC_8259.Value {
+    public var json: IETF.RFC.`8259`.Value {
         ISO.`5962`.Members.object([
             ("spdxVersion", .string(Self.version)),
             ("dataLicense", .string(Self.license)),

@@ -1,6 +1,6 @@
 # swift-iso-5962
 
-Use this package when you need to read or write a software bill of materials in SPDX 2.2 JSON, the edition published as ISO/IEC 5962:2021. Start from `` ISO.`5962`.Document ``, which reads from and writes to an `RFC_8259.Value`; turn JSON text into that value with swift-json. If you only need SPDX license expressions, for example inside a CycloneDX document, use the `ISO 5962 License Expression` product and start from `` ISO.`5962`.Expression ``.
+Use this package when you need to read or write a software bill of materials in SPDX 2.2 JSON, the edition published as ISO/IEC 5962:2021. Start from `` ISO.`5962`.Document ``, which reads from and writes to an `IETF.RFC.`8259`.Value`; turn JSON text into that value with swift-json. If you only need SPDX license expressions, for example inside a CycloneDX document, use the `ISO 5962 License Expression` product and start from `` ISO.`5962`.Expression ``.
 
 ## Laws
 
