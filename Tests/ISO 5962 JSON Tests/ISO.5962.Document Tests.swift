@@ -34,7 +34,7 @@ extension `ISO.5962.Document Tests`.Test.Integration {
     func `the example's package manager reference is a package URL`() throws {
         let document = try `ISO.5962.Document Tests`.Test.example()
         let doap = try #require(document.packages.first { $0.identifier.element == "fromDoap-0" })
-        let expected = try ECMA_427.PURL("pkg:maven/org.apache.jena/apache-jena@3.12.0")
+        let expected = try ECMA.`427`.PURL("pkg:maven/org.apache.jena/apache-jena@3.12.0")
         #expect(doap.externalRefs.first?.locator == .purl(expected))
         #expect(doap.externalRefs.first?.category == .packageManager)
     }

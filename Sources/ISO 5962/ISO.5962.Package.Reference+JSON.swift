@@ -19,8 +19,8 @@ extension ISO.`5962`.Package.Reference {
 
     static func locator(_ type: String, _ locator: String) throws(ISO.`5962`.Error) -> ISO.`5962`.Package.Reference.Locator {
         guard type == purl else { return .other(type: type, locator: locator) }
-        do throws(ECMA_427.Error) {
-            return .purl(try ECMA_427.PURL(locator))
+        do throws(ECMA.`427`.Error) {
+            return .purl(try ECMA.`427`.PURL(locator))
         } catch {
             throw .invalid("referenceLocator")
         }
